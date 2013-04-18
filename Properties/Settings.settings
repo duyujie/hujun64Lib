@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SharedWebClassLibrary.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="SharedWebClassLibrary_SmsService_SmsService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://211.155.31.104/service.asmx</Value>
+    </Setting>
+    <Setting Name="SharedWebClassLibrary_IpAddressSearchWebService_IpAddressSearchWebService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://www.webxml.com.cn/WebServices/IpAddressSearchWebService.asmx</Value>
+    </Setting>
+    <Setting Name="SharedWebClassLibrary_MobileCodeWS_MobileCodeWS" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://www.webxml.com.cn/WebServices/MobileCodeWS.asmx</Value>
+    </Setting>
+    <Setting Name="SharedWebClassLibrary_WeatherWS_WeatherWS" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://www.webxml.com.cn/WebServices/WeatherWS.asmx</Value>
+    </Setting>
+    <Setting Name="SharedWebClassLibrary_shfclawyer_Service" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://www.hujun64.com/service.asmx</Value>
+    </Setting>
+    <Setting Name="SharedWebClassLibrary_shfclawyer_ShfclawyerService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://www.shfclawyer.com/service.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

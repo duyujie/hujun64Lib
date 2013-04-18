@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.hujun64.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.hujun64.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.hujun64.com/">
+      <s:element name="PostGuestbook">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="md5Password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="guestbook" type="tns:Guestbook" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Guestbook">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ArticleBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="contact" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="reply" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="big_class_id" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="sex" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ip_from" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="province_from" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="replytime" type="s:dateTime" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArticleBase">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="author" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="content" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="news_from" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="keywords" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="enabled" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="is_static" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="addtime" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="last_mod" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="last_visited_time" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="click" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PostGuestbookResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PostGuestbookResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteGuestbook">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="md5Password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="guestbookId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteGuestbookResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteGuestbookResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PostArticle">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="md5Password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="article" type="tns:Article" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Article">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ArticleBase">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="class_id" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="big_class_id" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="module_class_id" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="is_all_class" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="ref_id" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ref_by_list" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="sort_seq" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="site_list" type="tns:ArrayOfString" />
+              <s:element minOccurs="0" maxOccurs="1" name="articlePicture" type="tns:ArticlePicture" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArticlePicture">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="pic_url" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="pic_alt" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="PostArticleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PostArticleResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteArticle">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="md5Password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="articleId" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteArticleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteArticleResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="PostGuestbookSoapIn">
+    <wsdl:part name="parameters" element="tns:PostGuestbook" />
+  </wsdl:message>
+  <wsdl:message name="PostGuestbookSoapOut">
+    <wsdl:part name="parameters" element="tns:PostGuestbookResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteGuestbookSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteGuestbook" />
+  </wsdl:message>
+  <wsdl:message name="DeleteGuestbookSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteGuestbookResponse" />
+  </wsdl:message>
+  <wsdl:message name="PostArticleSoapIn">
+    <wsdl:part name="parameters" element="tns:PostArticle" />
+  </wsdl:message>
+  <wsdl:message name="PostArticleSoapOut">
+    <wsdl:part name="parameters" element="tns:PostArticleResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteArticleSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteArticle" />
+  </wsdl:message>
+  <wsdl:message name="DeleteArticleSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteArticleResponse" />
+  </wsdl:message>
+  <wsdl:portType name="Hujun64ServiceSoap">
+    <wsdl:operation name="PostGuestbook">
+      <wsdl:input message="tns:PostGuestbookSoapIn" />
+      <wsdl:output message="tns:PostGuestbookSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteGuestbook">
+      <wsdl:input message="tns:DeleteGuestbookSoapIn" />
+      <wsdl:output message="tns:DeleteGuestbookSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PostArticle">
+      <wsdl:input message="tns:PostArticleSoapIn" />
+      <wsdl:output message="tns:PostArticleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteArticle">
+      <wsdl:input message="tns:DeleteArticleSoapIn" />
+      <wsdl:output message="tns:DeleteArticleSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Hujun64ServiceSoap" type="tns:Hujun64ServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PostGuestbook">
+      <soap:operation soapAction="http://www.hujun64.com/PostGuestbook" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteGuestbook">
+      <soap:operation soapAction="http://www.hujun64.com/DeleteGuestbook" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostArticle">
+      <soap:operation soapAction="http://www.hujun64.com/PostArticle" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteArticle">
+      <soap:operation soapAction="http://www.hujun64.com/DeleteArticle" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="Hujun64ServiceSoap12" type="tns:Hujun64ServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PostGuestbook">
+      <soap12:operation soapAction="http://www.hujun64.com/PostGuestbook" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteGuestbook">
+      <soap12:operation soapAction="http://www.hujun64.com/DeleteGuestbook" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PostArticle">
+      <soap12:operation soapAction="http://www.hujun64.com/PostArticle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteArticle">
+      <soap12:operation soapAction="http://www.hujun64.com/DeleteArticle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Hujun64Service">
+    <wsdl:port name="Hujun64ServiceSoap" binding="tns:Hujun64ServiceSoap">
+      <soap:address location="http://www.hujun64.com/service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="Hujun64ServiceSoap12" binding="tns:Hujun64ServiceSoap12">
+      <soap12:address location="http://www.hujun64.com/service.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

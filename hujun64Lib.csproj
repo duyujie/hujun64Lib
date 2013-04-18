@@ -1,0 +1,489 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F346220C-CFC7-4A9B-AA3E-A659D82AE60E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SharedWebClassLibrary</RootNamespace>
+    <AssemblyName>SharedWebClassLibrary</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'R|AnyCPU'">
+    <OutputPath>bin\R\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\SharedWebClassLibrary.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Apache.NMS">
+      <HintPath>..\Spring.NET-1.3.0\Spring.NET\lib\Net\2.0\Apache.NMS.dll</HintPath>
+    </Reference>
+    <Reference Include="Apache.NMS.ActiveMQ">
+      <HintPath>..\Spring.NET-1.3.0\Spring.NET\lib\Net\2.0\Apache.NMS.ActiveMQ.dll</HintPath>
+    </Reference>
+    <Reference Include="AspNetPager, Version=7.2.0.0, Culture=neutral, PublicKeyToken=fb0a0fe055d40fd4, processorArchitecture=MSIL" />
+    <Reference Include="Common.Logging, Version=1.2.0.0, Culture=neutral, PublicKeyToken=af08829b84f0328e">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Spring.NET-1.3.0\Spring.NET\bin\net\2.0\release\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="IKAnalyzerNet, Version=2.0.0.2, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL" />
+    <Reference Include="Lucene.Net, Version=2.9.2.1, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="O2S.Components.PDFRender4NET">
+      <HintPath>..\Libraries\O2S.Components.PDFRender4NET.dll</HintPath>
+    </Reference>
+    <Reference Include="PowerCollections, Version=1.0.2141.24679, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Spring.Aop, Version=1.3.0.20349, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Spring.NET-1.3.0\Spring.NET\bin\net\2.0\release\Spring.Aop.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core, Version=1.3.0.20349, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Spring.NET-1.3.0\Spring.NET\bin\net\2.0\release\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Data, Version=1.3.0.20349, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Spring.NET-1.3.0\Spring.NET\bin\net\2.0\release\Spring.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Data.NHibernate12, Version=1.3.0.20349, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Spring.NET-1.3.0\Spring.NET\bin\net\2.0\release\Spring.Data.NHibernate12.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Data.NHibernate20, Version=1.3.0.20349, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Spring.NET-1.3.0\Spring.NET\bin\net\2.0\release\Spring.Data.NHibernate20.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Data.NHibernate21, Version=1.3.0.20349, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Spring.NET-1.3.0\Spring.NET\bin\net\2.0\release\Spring.Data.NHibernate21.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Messaging, Version=1.3.0.20349, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Spring.NET-1.3.0\Spring.NET\bin\net\2.0\release\Spring.Messaging.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Messaging.Ems, Version=1.3.0.20349, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Spring.NET-1.3.0\Spring.NET\bin\net\2.0\release\Spring.Messaging.Ems.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Messaging.Nms, Version=1.3.0.20349, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Spring.NET-1.3.0\Spring.NET\bin\net\2.0\release\Spring.Messaging.Nms.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Scheduling.Quartz, Version=1.3.0.20349, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Spring.NET-1.3.0\Spring.NET\bin\net\2.0\release\Spring.Scheduling.Quartz.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Services, Version=1.3.0.20349, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Spring.NET-1.3.0\Spring.NET\bin\net\2.0\release\Spring.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Template.Velocity, Version=1.3.0.20349, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Spring.NET-1.3.0\Spring.NET\bin\net\2.0\release\Spring.Template.Velocity.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Testing.Microsoft, Version=1.3.0.20349, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Spring.NET-1.3.0\Spring.NET\bin\net\2.0\release\Spring.Testing.Microsoft.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Testing.NUnit, Version=1.3.0.20349, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Spring.NET-1.3.0\Spring.NET\bin\net\2.0\release\Spring.Testing.NUnit.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Web, Version=1.3.0.20349, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Spring.NET-1.3.0\Spring.NET\bin\net\2.0\release\Spring.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Web.Extensions, Version=1.3.0.20349, Culture=neutral, PublicKeyToken=65e474d141e25e07, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Spring.NET-1.3.0\Spring.NET\bin\net\2.0\release\Spring.Web.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admin\AdminPageBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DAO\AdminDao.cs" />
+    <Compile Include="DAO\ArticleDao.cs" />
+    <Compile Include="DAO\BackupDao.cs" />
+    <Compile Include="DAO\ClientDao.cs" />
+    <Compile Include="DAO\CommonDao.cs" />
+    <Compile Include="DAO\GuestbookDao.cs" />
+    <Compile Include="DAO\IAdminDao.cs" />
+    <Compile Include="DAO\IArticleDao.cs" />
+    <Compile Include="DAO\IBackupDao.cs" />
+    <Compile Include="DAO\IClientDao.cs" />
+    <Compile Include="DAO\ICommonDao.cs" />
+    <Compile Include="DAO\IGuestbookDao.cs" />
+    <Compile Include="DAO\IIpInfoDao.cs" />
+    <Compile Include="DAO\ILinkDao.cs" />
+    <Compile Include="DAO\IMainClassDao.cs" />
+    <Compile Include="DAO\IpInfoDao.cs" />
+    <Compile Include="DAO\IVisitedHistoryDao.cs" />
+    <Compile Include="DAO\LinkDao.cs" />
+    <Compile Include="DAO\MainClassDao.cs" />
+    <Compile Include="DAO\VisitedHistoryDao.cs" />
+    <Compile Include="Logic\AsyncTaskService.cs" />
+    <Compile Include="Logic\GuestbookService.cs" />
+    <Compile Include="Logic\ICgwService.cs" />
+    <Compile Include="Logic\IMainClassService.cs" />
+    <Compile Include="Logic\ServiceFactory.cs" />
+    <Compile Include="Logic\MainClassService.cs" />
+    <Compile Include="Logic\ILinkService.cs" />
+    <Compile Include="Logic\LinkService.cs" />
+    <Compile Include="Logic\ClientService.cs" />
+    <Compile Include="Logic\IClientService.cs" />
+    <Compile Include="Logic\ICommonService.cs" />
+    <Compile Include="Logic\CommonService.cs" />
+    <Compile Include="Logic\IAdminService.cs" />
+    <Compile Include="Logic\AdminService.cs" />
+    <Compile Include="Logic\IBackupService.cs" />
+    <Compile Include="Logic\IArticleService.cs" />
+    <Compile Include="Logic\ArticleService.cs" />
+    <Compile Include="Logic\IGuestbookService.cs" />
+    <Compile Include="PageBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PO\Article.cs" />
+    <Compile Include="PO\ArticleBase.cs" />
+    <Compile Include="PO\ArticlePicture.cs" />
+    <Compile Include="PO\BackupPool.cs" />
+    <Compile Include="PO\CgwWords.cs" />
+    <Compile Include="PO\ClickIpSummary.cs" />
+    <Compile Include="PO\ClickSourceSummary.cs" />
+    <Compile Include="PO\ClickSummary.cs" />
+    <Compile Include="PO\Client.cs" />
+    <Compile Include="PO\ComparerArticle.cs" />
+    <Compile Include="PO\ComparerDropMenuClass.cs" />
+    <Compile Include="PO\ComparerGuestbook.cs" />
+    <Compile Include="PO\ComparerLink.cs" />
+    <Compile Include="PO\ComparerMainClass.cs" />
+    <Compile Include="PO\ComparerSiteClass.cs" />
+    <Compile Include="PO\CountDataTable.cs" />
+    <Compile Include="PO\DropMenuClass.cs" />
+    <Compile Include="PO\GlobalConfig.cs" />
+    <Compile Include="PO\GlobalSeq.cs" />
+    <Compile Include="PO\Guestbook.cs" />
+    <Compile Include="PO\ImageUrl.cs" />
+    <Compile Include="PO\IpInfo.cs" />
+    <Compile Include="PO\Lawyer.cs" />
+    <Compile Include="PO\Link.cs" />
+    <Compile Include="PO\MainClass.cs" />
+    <Compile Include="PO\PageInfo.cs" />
+    <Compile Include="PO\RadioMainClass.cs" />
+    <Compile Include="PO\SearchResult.cs" />
+    <Compile Include="PO\Site.cs" />
+    <Compile Include="PO\SiteClass.cs" />
+    <Compile Include="PO\SitemapUrl.cs" />
+    <Compile Include="PO\SortObject.cs" />
+    <Compile Include="PO\VisitedHistory.cs" />
+    <Compile Include="PO\Weather.cs" />
+    <Compile Include="PO\PageMetal.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Total.cs" />
+    <Compile Include="Types\ApproveStatus.cs" />
+    <Compile Include="Types\AsyncTaskActionType.cs" />
+    <Compile Include="Types\ClientStatus.cs" />
+    <Compile Include="Types\FontSizeEnum.cs" />
+    <Compile Include="Types\FontSizeType.cs" />
+    <Compile Include="Types\FreqEnum.cs" />
+    <Compile Include="Types\MainClassCategory.cs" />
+    <Compile Include="Types\PageType.cs" />
+    <Compile Include="Types\PriorityType.cs" />
+    <Compile Include="Types\RefreshType.cs" />
+    <Compile Include="Types\ResponseCompressionType.cs" />
+    <Compile Include="Types\SearchType.cs" />
+    <Compile Include="Types\SeqType.cs" />
+    <Compile Include="Types\SitemapType.cs" />
+    <Compile Include="Types\WebServiceActionType.cs" />
+    <Compile Include="Util\CacheManager.cs" />
+    <Compile Include="Logic\CgwService.cs" />
+    <Compile Include="Util\CommonFilter.cs" />
+    <Compile Include="Util\CompressionModule.cs" />
+    <Compile Include="Util\InternetSearcher.cs" />
+    <Compile Include="Util\Hardware.cs" />
+    <Compile Include="Util\InternetWebService.cs" />
+    <Compile Include="Util\LuceneSearcher.cs" />
+    <Compile Include="Util\ResponseCompressionType.cs" />
+    <Compile Include="Util\Util.cs" />
+    <Compile Include="Logic\BackupService.cs" />
+    <Compile Include="Util\UtilData.cs" />
+    <Compile Include="Util\UtilHtml.cs" />
+    <Compile Include="Util\UtilHttp.cs" />
+    <Compile Include="Util\UtilImport.cs" />
+    <Compile Include="Util\UtilMail.cs" />
+    <Compile Include="Util\UtilSitemap.cs" />
+    <Compile Include="Util\UtilStatic.cs" />
+    <Compile Include="Util\UtilString.cs" />
+    <Compile Include="Util\UtilFile.cs" />
+    <Compile Include="Util\UtilPageMeta.cs" />
+    <Compile Include="Web References\IpAddressSearchWebService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\MobileCodeWS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\hujun64\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\shfclawyer\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\SmsService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\WeatherWS\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Dll\AspNetPager.dll" />
+    <Content Include="Dll\Common.Logging.dll" />
+    <Content Include="Dll\IKAnalyzerNet.dll" />
+    <Content Include="Dll\log4net.dll" />
+    <Content Include="Dll\Lucene.Net.dll" />
+    <Content Include="Dll\PowerCollections.dll" />
+    <Content Include="Dll\Spring.Aop.dll" />
+    <Content Include="Dll\Spring.Core.dll" />
+    <Content Include="Dll\Spring.Data.dll" />
+    <Content Include="Dll\Spring.Data.NHibernate12.dll" />
+    <Content Include="Dll\Spring.Data.NHibernate20.dll" />
+    <Content Include="Dll\Spring.Data.NHibernate21.dll" />
+    <Content Include="Dll\Spring.Messaging.dll" />
+    <Content Include="Dll\Spring.Messaging.Ems.dll" />
+    <Content Include="Dll\Spring.Messaging.Nms.dll" />
+    <Content Include="Dll\Spring.Scheduling.Quartz.dll" />
+    <Content Include="Dll\Spring.Services.dll" />
+    <Content Include="Dll\Spring.Template.Velocity.dll" />
+    <Content Include="Dll\Spring.Testing.Microsoft.dll" />
+    <Content Include="Dll\Spring.Testing.NUnit.dll" />
+    <Content Include="Dll\Spring.Web.dll" />
+    <Content Include="Dll\Spring.Web.Extensions.dll" />
+    <None Include="Web References\shfclawyer\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\shfclawyer\service.disco" />
+    <None Include="Web References\hujun64\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\hujun64\service.disco" />
+    <None Include="Web References\hujun64\service.wsdl" />
+    <None Include="Web References\shfclawyer\service.wsdl" />
+    <None Include="Web References\WeatherWS\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\WeatherWS\WeatherWS.disco" />
+    <None Include="Web References\MobileCodeWS\MobileCodeWS.disco" />
+    <None Include="Web References\IpAddressSearchWebService\IpAddressSearchWebService.disco" />
+    <None Include="Web References\IpAddressSearchWebService\IpAddressSearchWebService.wsdl" />
+    <None Include="Web References\IpAddressSearchWebService\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\MobileCodeWS\MobileCodeWS.wsdl" />
+    <None Include="Web References\MobileCodeWS\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\SmsService\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\SmsService\service.disco" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\SmsService\service.wsdl" />
+    <None Include="Web References\WeatherWS\WeatherWS.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://211.155.31.104/service.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\SmsService\</RelPath>
+      <UpdateFromURL>http://211.155.31.104/service.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>SharedWebClassLibrary_SmsService_SmsService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://www.hujun64.com/service.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\hujun64\</RelPath>
+      <UpdateFromURL>http://www.hujun64.com/service.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>SharedWebClassLibrary_shfclawyer_Service</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://www.shfclawyer.com/service.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\shfclawyer\</RelPath>
+      <UpdateFromURL>http://www.shfclawyer.com/service.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>SharedWebClassLibrary_shfclawyer_ShfclawyerService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://www.webxml.com.cn/WebServices/IpAddressSearchWebService.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\IpAddressSearchWebService\</RelPath>
+      <UpdateFromURL>http://www.webxml.com.cn/WebServices/IpAddressSearchWebService.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>SharedWebClassLibrary_IpAddressSearchWebService_IpAddressSearchWebService</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://www.webxml.com.cn/WebServices/MobileCodeWS.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\MobileCodeWS\</RelPath>
+      <UpdateFromURL>http://www.webxml.com.cn/WebServices/MobileCodeWS.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>SharedWebClassLibrary_MobileCodeWS_MobileCodeWS</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://www.webxml.com.cn/WebServices/WeatherWS.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\WeatherWS\</RelPath>
+      <UpdateFromURL>http://www.webxml.com.cn/WebServices/WeatherWS.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>SharedWebClassLibrary_WeatherWS_WeatherWS</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
