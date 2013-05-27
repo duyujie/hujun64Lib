@@ -177,6 +177,18 @@ namespace com.hujun64.Dao
         }
         public int InsertLink(Link link)
         {
+            string querySql = "select count(1) from link where site_name=@site_name";
+            IDbParameters queryDbParameters = CreateDbParameters();
+
+            queryDbParameters.AddWithValue("site_name", link.link_site_name);
+
+            DataSet ds = AdoTemplate.DataSetCreateWithParams(CommandType.Text, querySql, queryDbParameters);
+            if (ds.Tables[0].Rows.Count > 0)
+                return 0;
+
+
+
+
             string sql = "insert into link (id,site_name,site_url,site_logo,description,my_url,approve_status,enabled,sort_seq,addtime,site_id,is_static,last_mod) values (@link_id,@site_name,@site_url,@site_logo,@description,@my_url,@approve_status,@enabled,@sort_seq,getdate(),@site_id,0,getdate())";
             IDbParameters dbParameters = CreateDbParameters();
 
