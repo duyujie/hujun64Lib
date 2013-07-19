@@ -13,6 +13,7 @@ namespace com.hujun64.Dao
         Link GetLink(string linkId);
         List<Link> GetAllLink();
 
+        bool ExistsLink(string siteUrl);
         int InsertLink(Link link);
         int UpdateLink(Link link);
         int DeleteLink(string lid);

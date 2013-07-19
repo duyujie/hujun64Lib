@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Generic; 
 using System.Text;
 using com.hujun64.Dao;
 using com.hujun64.po;
@@ -164,8 +164,12 @@ namespace com.hujun64.logic
         [Transaction(TransactionPropagation.Required)]
         public bool InsertLink(Link link)
         {
+            
             if (link == null)
                 return false;
+
+            if (linkDao.ExistsLink(link.link_site_url))
+                throw new Exception("已经有相同网站名称或地址在申请中，请更换后重试！");
 
             if (string.IsNullOrEmpty(link.link_id))
                 link.link_id = this.GenerateId();

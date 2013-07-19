@@ -72,7 +72,10 @@ namespace com.hujun64
             string sexFemale = "女士";
             string sexUnknown = "先生/女士";
 
-            StringBuilder nameSex = new StringBuilder(name.Substring(0, 1));
+            StringBuilder nameSex = new StringBuilder();
+
+            if (!string.IsNullOrEmpty(name))
+                nameSex.Append(name.Substring(0, 1));
 
 
             if (sex == "男")
