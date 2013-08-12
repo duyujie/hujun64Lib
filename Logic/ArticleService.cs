@@ -12,6 +12,8 @@ namespace com.hujun64.logic
 {
     internal class ArticleService : IArticleService
     {
+        private static readonly object CachedArticleDictLocker = new object();
+
         private static Dictionary<string, Article> CachedArticleDict = null;
         private static Dictionary<string, string> CachedTitleKeyDict = null;
         private static Dictionary<string, List<string>> CachedClassArticleKeyDict = null;
@@ -102,34 +104,36 @@ namespace com.hujun64.logic
         {
 
             List<Article> articleList = articleDao.GetAllArticle(IS_CACHE_CONTENT);
-
-            if (CachedArticleDict == null)
-                CachedArticleDict = new Dictionary<string, Article>(articleList.Count);
-            else
-                CachedArticleDict.Clear();
-
-            if (CachedTitleKeyDict == null)
-                CachedTitleKeyDict = new Dictionary<string, string>(articleList.Count);
-            else
-                CachedTitleKeyDict.Clear();
-
-            if (CachedClassArticleKeyDict == null)
-                CachedClassArticleKeyDict = new Dictionary<string, List<string>>();
-            else
-                CachedClassArticleKeyDict.Clear();
-
-            if (CachedRefArticleKeyDict == null)
-                CachedRefArticleKeyDict = new Dictionary<string, string>();
-            else
-                CachedRefArticleKeyDict.Clear();
-
-
-            foreach (Article article in articleList)
+            lock (CachedArticleDictLocker)
             {
-                NewCachedArticle(article);
+                if (CachedArticleDict == null)
+                    CachedArticleDict = new Dictionary<string, Article>(articleList.Count);
+                else
+                    CachedArticleDict.Clear();
+
+
+                if (CachedTitleKeyDict == null)
+                    CachedTitleKeyDict = new Dictionary<string, string>(articleList.Count);
+                else
+                    CachedTitleKeyDict.Clear();
+
+                if (CachedClassArticleKeyDict == null)
+                    CachedClassArticleKeyDict = new Dictionary<string, List<string>>();
+                else
+                    CachedClassArticleKeyDict.Clear();
+
+                if (CachedRefArticleKeyDict == null)
+                    CachedRefArticleKeyDict = new Dictionary<string, string>();
+                else
+                    CachedRefArticleKeyDict.Clear();
+
+
+                foreach (Article article in articleList)
+                {
+                    NewCachedArticle(article);
+                }
+
             }
-
-
 
             MaintainCachedArticleRef();
 
@@ -139,52 +143,59 @@ namespace com.hujun64.logic
         {
             if (string.IsNullOrEmpty(articleId))
                 return;
-
-
-            if (CachedRefArticleKeyDict.ContainsKey(articleId))
+            lock (CachedArticleDictLocker)
             {
-                CachedRefArticleKeyDict.Remove(articleId);
-            }
-            if (CachedRefArticleKeyDict.ContainsValue(articleId))
-            {
-                List<string> removeKeyList = new List<string>();
-                foreach (string key in CachedRefArticleKeyDict.Keys)
+
+                if (CachedRefArticleKeyDict.ContainsKey(articleId))
                 {
-                    if (CachedRefArticleKeyDict[key] == articleId)
-                        removeKeyList.Add(key);
+                    CachedRefArticleKeyDict.Remove(articleId);
                 }
-                foreach (string key in removeKeyList)
+                if (CachedRefArticleKeyDict.ContainsValue(articleId))
                 {
-                    CachedRefArticleKeyDict.Remove(key);
-                }
-            }
-
-
-            foreach (List<string> idList in CachedClassArticleKeyDict.Values)
-            {
-                idList.Remove(articleId);
-            }
-
-
-            if (CachedTitleKeyDict.ContainsValue(articleId))
-            {
-                List<string> removeKeyList = new List<string>();
-                foreach (string key in CachedTitleKeyDict.Keys)
-                {
-                    if (CachedTitleKeyDict[key] == articleId)
-                        removeKeyList.Add(key);
-                }
-                foreach (string key in removeKeyList)
-                {
-                    CachedTitleKeyDict.Remove(key);
+                    List<string> removeKeyList = new List<string>();
+                    foreach (string key in CachedRefArticleKeyDict.Keys)
+                    {
+                        if (CachedRefArticleKeyDict[key] == articleId)
+                            removeKeyList.Add(key);
+                    }
+                    foreach (string key in removeKeyList)
+                    {
+                        CachedRefArticleKeyDict.Remove(key);
+                    }
                 }
 
-            }
-            if (CachedArticleDict.ContainsKey(articleId))
-            {
-                CachedArticleDict.Remove(articleId);
-            }
 
+                foreach (List<string> idList in CachedClassArticleKeyDict.Values)
+                {
+                    idList.Remove(articleId);
+                }
+
+
+                if (CachedTitleKeyDict.ContainsValue(articleId))
+                {
+                    List<string> removeKeyList = new List<string>();
+                    lock (CachedArticleDictLocker)
+                    {
+                        foreach (string key in CachedTitleKeyDict.Keys)
+                        {
+                            if (CachedTitleKeyDict[key] == articleId)
+                                removeKeyList.Add(key);
+                        }
+                    }
+                    foreach (string key in removeKeyList)
+                    {
+                        CachedTitleKeyDict.Remove(key);
+                    }
+
+                }
+                lock (CachedArticleDictLocker)
+                {
+                    if (CachedArticleDict.ContainsKey(articleId))
+                    {
+                        CachedArticleDict.Remove(articleId);
+                    }
+                }
+            }
 
         }
         [Transaction(TransactionPropagation.Required)]
@@ -204,51 +215,60 @@ namespace com.hujun64.logic
             if (article == null || string.IsNullOrEmpty(article.id) || CachedArticleDict.ContainsKey(article.id))
                 return;
 
-
-            CachedArticleDict.Add(article.id, article);
-            if (string.IsNullOrEmpty(article.ref_id) && !CachedTitleKeyDict.ContainsKey(article.title))
-                CachedTitleKeyDict.Add(article.title, article.id);
-
-
-            //referenced
-            if (!string.IsNullOrEmpty(article.ref_id) && !CachedRefArticleKeyDict.ContainsKey(article.id))
+            lock (CachedArticleDictLocker)
             {
-                CachedRefArticleKeyDict.Add(article.id, article.ref_id);
+                CachedArticleDict.Add(article.id, article);
+
+                if (string.IsNullOrEmpty(article.ref_id) && !CachedTitleKeyDict.ContainsKey(article.title))
+                    CachedTitleKeyDict.Add(article.title, article.id);
+
+
+                //referenced
+                if (!string.IsNullOrEmpty(article.ref_id) && !CachedRefArticleKeyDict.ContainsKey(article.id))
+                {
+                    CachedRefArticleKeyDict.Add(article.id, article.ref_id);
+                }
+
+
+
+                //纠正补充small-big关系
+                CorrectArticleClass(article);
+
+                //small class
+                CacheClassArticleKey(article.class_id, article.id);
+
+                //big class
+                CacheClassArticleKey(article.big_class_id, article.id);
+
+                //module class
+                CacheClassArticleKey(article.module_class_id, article.id);
             }
-
-
-
-            //纠正补充small-big关系
-            CorrectArticleClass(article);
-
-            //small class
-            CacheClassArticleKey(article.class_id, article.id);
-
-            //big class
-            CacheClassArticleKey(article.big_class_id, article.id);
-
-            //module class
-            CacheClassArticleKey(article.module_class_id, article.id);
         }
         private void MaintainCachedArticleSite()
         {
             CachedArticleSiteKeyDict = this.GetArticleSiteDict();
-            foreach (string articleId in CachedArticleSiteKeyDict.Keys)
+            lock (CachedArticleDictLocker)
             {
-                if (CachedArticleDict.ContainsKey(articleId))
+                foreach (string articleId in CachedArticleSiteKeyDict.Keys)
                 {
-                    CachedArticleDict[articleId].site_list = CachedArticleSiteKeyDict[articleId];
-                }
+                    if (CachedArticleDict.ContainsKey(articleId))
+                    {
+                        CachedArticleDict[articleId].site_list = CachedArticleSiteKeyDict[articleId];
+                    }
 
+                }
             }
         }
         private void MaintainCachedArticleRef()
         {
-            foreach (string refId in CachedRefArticleKeyDict.Keys)
+            lock (CachedArticleDictLocker)
             {
-                Article orginalArticle = this.GetArticle(CachedRefArticleKeyDict[refId]);
-                if (!orginalArticle.ref_by_list.Contains(refId))
-                    orginalArticle.ref_by_list = orginalArticle.ref_by_list + " " + refId;
+                foreach (string refId in CachedRefArticleKeyDict.Keys)
+                {
+                    Article orginalArticle = this.GetArticle(CachedRefArticleKeyDict[refId]);
+                    if (!orginalArticle.ref_by_list.Contains(refId))
+                        orginalArticle.ref_by_list = orginalArticle.ref_by_list + " " + refId;
+                }
             }
 
         }
@@ -367,12 +387,14 @@ namespace com.hujun64.logic
         {
             List<Article> moduleArticleList = new List<Article>();
             IMainClassService mainClassService = ServiceFactory.GetMainClassService();
-
-            foreach (Article article in CachedArticleDict.Values)
+            lock (CachedArticleDictLocker)
             {
+                foreach (Article article in CachedArticleDict.Values)
+                {
 
-                if (article.module_class_id == moduleId)
-                    moduleArticleList.Add(article);
+                    if (article.module_class_id == moduleId)
+                        moduleArticleList.Add(article);
+                }
             }
             moduleArticleList.Sort(new ComparerArticle());
             return moduleArticleList.GetRange(0, moduleArticleList.Count >= count ? count : moduleArticleList.Count);
@@ -390,12 +412,14 @@ namespace com.hujun64.logic
         public List<Article> GetTopArticleByBigClassId(string bigClassId, int count)
         {
             List<Article> bigArticleList = new List<Article>();
-
-            foreach (Article article in CachedArticleDict.Values)
+            lock (CachedArticleDictLocker)
             {
+                foreach (Article article in CachedArticleDict.Values)
+                {
 
-                if (article.big_class_id == bigClassId && article.site_list.Contains(Total.SiteId))
-                    bigArticleList.Add(article);
+                    if (article.big_class_id == bigClassId && article.site_list.Contains(Total.SiteId))
+                        bigArticleList.Add(article);
+                }
             }
             bigArticleList.Sort(new ComparerArticle());
             return bigArticleList.GetRange(0, bigArticleList.Count >= count ? count : bigArticleList.Count);
@@ -850,10 +874,13 @@ namespace com.hujun64.logic
         public List<string> GetAllAuthorsList()
         {
             List<string> authorList = new List<string>();
-            foreach (Article article in CachedArticleDict.Values)
+            lock (CachedArticleDictLocker)
             {
-                if (!string.IsNullOrEmpty(article.author) && !authorList.Contains(article.author))
-                    authorList.Add(article.author);
+                foreach (Article article in CachedArticleDict.Values)
+                {
+                    if (!string.IsNullOrEmpty(article.author) && !authorList.Contains(article.author))
+                        authorList.Add(article.author);
+                }
             }
             return authorList;
         }
@@ -929,6 +956,7 @@ namespace com.hujun64.logic
 
 
         }
+
 
         public bool IsArticleRef(string articleId)
         {
@@ -1006,18 +1034,21 @@ namespace com.hujun64.logic
         {
             List<Article> articleList = new List<Article>();
             List<string> titleList = new List<string>();
-            foreach (Article article in CachedArticleDict.Values)
+            lock (CachedArticleDictLocker)
             {
-                if (article.enabled &&
-                    (!ingoreNull && (string.IsNullOrEmpty(bigClassId) || string.IsNullOrEmpty(article.big_class_id) || article.big_class_id == bigClassId) && (string.IsNullOrEmpty(smallClassId) || string.IsNullOrEmpty(article.class_id) || article.class_id == smallClassId) && (string.IsNullOrEmpty(moduleClassId) || article.module_class_id == moduleClassId))
-                    || (ingoreNull && (article.big_class_id == bigClassId || article.class_id == smallClassId || article.module_class_id == moduleClassId)))
+                foreach (Article article in CachedArticleDict.Values)
+                {
+                    if (article.enabled &&
+                        (!ingoreNull && (string.IsNullOrEmpty(bigClassId) || string.IsNullOrEmpty(article.big_class_id) || article.big_class_id == bigClassId) && (string.IsNullOrEmpty(smallClassId) || string.IsNullOrEmpty(article.class_id) || article.class_id == smallClassId) && (string.IsNullOrEmpty(moduleClassId) || article.module_class_id == moduleClassId))
+                        || (ingoreNull && (article.big_class_id == bigClassId || article.class_id == smallClassId || article.module_class_id == moduleClassId)))
 
-                    if (!titleList.Contains(article.title))
-                    {
-                        titleList.Add(article.title);
-                        articleList.Add(article);
+                        if (!titleList.Contains(article.title))
+                        {
+                            titleList.Add(article.title);
+                            articleList.Add(article);
 
-                    }
+                        }
+                }
             }
 
             if (articleList.Count < topBegin)
@@ -1041,20 +1072,22 @@ namespace com.hujun64.logic
 
             List<Article> articleList = new List<Article>();
             List<string> titleList = new List<string>();
-            foreach (Article article in CachedArticleDict.Values)
+            lock (CachedArticleDictLocker)
             {
-                if (article.enabled && article.articlePicture != null && article.articlePicture.id != null
-                    && article.module_class_id == classId)
+                foreach (Article article in CachedArticleDict.Values)
+                {
+                    if (article.enabled && article.articlePicture != null && article.articlePicture.id != null
+                        && article.module_class_id == classId)
 
-                    if (!titleList.Contains(article.title))
-                    {
-                        titleList.Add(article.title);
-                        articleList.Add(article);
+                        if (!titleList.Contains(article.title))
+                        {
+                            titleList.Add(article.title);
+                            articleList.Add(article);
 
-                    }
+                        }
+                }
+
             }
-
-
             if (articleList.Count < topBegin)
             {
                 return new List<Article>(0);

@@ -11,6 +11,8 @@ namespace com.hujun64.logic
 {
     internal class GuestbookService : IGuestbookService
     {
+        private static readonly object CachedGuestbookDictLocker = new object();
+        
         private static Dictionary<string, Guestbook> CachedGuestbookDict = null;
         private static Dictionary<string, string> CachedTitleKeyDict = null;
         private static Dictionary<string, List<string>> CachedClassGuestbookKeyDict = null;
@@ -93,34 +95,35 @@ namespace com.hujun64.logic
                 return;
 
 
-
-
-
-            foreach (List<string> idList in CachedClassGuestbookKeyDict.Values)
+            lock (CachedGuestbookDictLocker)
             {
-                idList.Remove(guestbookId);
-            }
 
 
-            if (CachedTitleKeyDict.ContainsValue(guestbookId))
-            {
-                List<string> removeKeyList = new List<string>();
-                foreach (string key in CachedTitleKeyDict.Keys)
+                foreach (List<string> idList in CachedClassGuestbookKeyDict.Values)
                 {
-                    if (CachedTitleKeyDict[key] == guestbookId)
-                        removeKeyList.Add(key);
-                }
-                foreach (string key in removeKeyList)
-                {
-                    CachedTitleKeyDict.Remove(key);
+                    idList.Remove(guestbookId);
                 }
 
-            }
-            if (CachedGuestbookDict.ContainsKey(guestbookId))
-            {
-                CachedGuestbookDict.Remove(guestbookId);
-            }
 
+                if (CachedTitleKeyDict.ContainsValue(guestbookId))
+                {
+                    List<string> removeKeyList = new List<string>();
+                    foreach (string key in CachedTitleKeyDict.Keys)
+                    {
+                        if (CachedTitleKeyDict[key] == guestbookId)
+                            removeKeyList.Add(key);
+                    }
+                    foreach (string key in removeKeyList)
+                    {
+                        CachedTitleKeyDict.Remove(key);
+                    }
+
+                }
+                if (CachedGuestbookDict.ContainsKey(guestbookId))
+                {
+                    CachedGuestbookDict.Remove(guestbookId);
+                }
+            }
 
         }
 
@@ -128,28 +131,30 @@ namespace com.hujun64.logic
         {
 
             List<Guestbook> guestbookList = guestbookDao.GetAllGuestbook(IS_CACHE_CONTENT);
-
-            if (CachedGuestbookDict == null)
-                CachedGuestbookDict = new Dictionary<string, Guestbook>(guestbookList.Count);
-            else
-                CachedGuestbookDict.Clear();
-
-            if (CachedTitleKeyDict == null)
-                CachedTitleKeyDict = new Dictionary<string, string>(guestbookList.Count);
-            else
-                CachedTitleKeyDict.Clear();
-
-            if (CachedClassGuestbookKeyDict == null)
-                CachedClassGuestbookKeyDict = new Dictionary<string, List<string>>();
-            else
-                CachedClassGuestbookKeyDict.Clear();
-
-
-            foreach (Guestbook guestbook in guestbookList)
+            lock (CachedGuestbookDictLocker)
             {
-                NewCachedGuestbook(guestbook);
-            }
+                if (CachedGuestbookDict == null)
+                    CachedGuestbookDict = new Dictionary<string, Guestbook>(guestbookList.Count);
+                else
+                    CachedGuestbookDict.Clear();
 
+                if (CachedTitleKeyDict == null)
+                    CachedTitleKeyDict = new Dictionary<string, string>(guestbookList.Count);
+                else
+                    CachedTitleKeyDict.Clear();
+
+                if (CachedClassGuestbookKeyDict == null)
+                    CachedClassGuestbookKeyDict = new Dictionary<string, List<string>>();
+                else
+                    CachedClassGuestbookKeyDict.Clear();
+
+
+                foreach (Guestbook guestbook in guestbookList)
+                {
+                    NewCachedGuestbook(guestbook);
+                }
+
+            }
 
         }
 
@@ -158,12 +163,13 @@ namespace com.hujun64.logic
         {
             if (guestbook == null || string.IsNullOrEmpty(guestbook.id))
                 return;
+            lock (CachedGuestbookDictLocker)
+            {
+                CachedGuestbookDict.Add(guestbook.id, guestbook);
 
-            CachedGuestbookDict.Add(guestbook.id, guestbook);
-
-            //big class
-            CacheClassGuestbookKey(guestbook.big_class_id, guestbook.id);
-
+                //big class
+                CacheClassGuestbookKey(guestbook.big_class_id, guestbook.id);
+            }
 
         }
 
@@ -174,22 +180,24 @@ namespace com.hujun64.logic
 
 
             List<string> classGuestbookList;
-            if (CachedClassGuestbookKeyDict.ContainsKey(classId))
+            lock (CachedGuestbookDictLocker)
             {
-                classGuestbookList = CachedClassGuestbookKeyDict[classId];
-            }
-            else
-            {
-                classGuestbookList = new List<string>();
-                CachedClassGuestbookKeyDict.Add(classId, classGuestbookList);
-            }
+                if (CachedClassGuestbookKeyDict.ContainsKey(classId))
+                {
+                    classGuestbookList = CachedClassGuestbookKeyDict[classId];
+                }
+                else
+                {
+                    classGuestbookList = new List<string>();
+                    CachedClassGuestbookKeyDict.Add(classId, classGuestbookList);
+                }
 
-            if (!classGuestbookList.Contains(guestbookId))
-            {
-                classGuestbookList.Add(guestbookId);
+                if (!classGuestbookList.Contains(guestbookId))
+                {
+                    classGuestbookList.Add(guestbookId);
+                }
+
             }
-
-
 
         }
         public string GeneratePageTitle(Guestbook guestbook)
@@ -232,10 +240,13 @@ namespace com.hujun64.logic
         public Dictionary<string, string> GetAllGuestEmailDict(bool isOnlyShanghai)
         {
             Dictionary<string, string> guestEmailDict = new Dictionary<string, string>();
-            foreach (Guestbook guestbook in CachedGuestbookDict.Values)
+            lock (CachedGuestbookDictLocker)
             {
-                if (!string.IsNullOrEmpty(guestbook.province_from) && guestbook.province_from.Contains("上海"))
-                    guestEmailDict.Add(guestbook.id, guestbook.email);
+                foreach (Guestbook guestbook in CachedGuestbookDict.Values)
+                {
+                    if (!string.IsNullOrEmpty(guestbook.province_from) && guestbook.province_from.Contains("上海"))
+                        guestEmailDict.Add(guestbook.id, guestbook.email);
+                }
             }
             return guestEmailDict;
         }
@@ -286,16 +297,17 @@ namespace com.hujun64.logic
         {
 
             List<Guestbook> guestbookList = new List<Guestbook>();
-
-            foreach (Guestbook guestbook in CachedGuestbookDict.Values)
+            lock (CachedGuestbookDictLocker)
             {
-                if (string.IsNullOrEmpty(bigClassId) || guestbook.big_class_id == bigClassId)
+                foreach (Guestbook guestbook in CachedGuestbookDict.Values)
                 {
-                    guestbookList.Add(guestbook);
+                    if (string.IsNullOrEmpty(bigClassId) || guestbook.big_class_id == bigClassId)
+                    {
+                        guestbookList.Add(guestbook);
+                    }
+
                 }
-
             }
-
             if (guestbookList.Count < topBegin)
             {
                 totalCount = 0;
@@ -473,10 +485,13 @@ namespace com.hujun64.logic
             int success = guestbookDao.UpdateAllStatic(isStatic, timestamp);
 
             //更新cache
-            foreach (string id in CachedGuestbookDict.Keys)
+            lock (CachedGuestbookDictLocker)
             {
-                CachedGuestbookDict[id].is_static = isStatic;
-                CachedGuestbookDict[id].last_mod = timestamp;
+                foreach (string id in CachedGuestbookDict.Keys)
+                {
+                    CachedGuestbookDict[id].is_static = isStatic;
+                    CachedGuestbookDict[id].last_mod = timestamp;
+                }
             }
             return success;
         }
