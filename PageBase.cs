@@ -25,17 +25,13 @@ namespace com.hujun64
                 "<b>Stack Trace:</b><br/>" +
                 currentError.ToString();
 
+           
+
             Session["err"] = errMsg;
-            //如果发生致命应用程序错误
-            if (!(currentError is ApplicationException))
-            {
-                //向Windows事件日志中写入错误日志
-                //LogEvent( currentError.ToString(), EventLogEntryType.Error );
-            }
-            //在页面中显示错误
-            //Response.Write( errMsg );
+           
             
             Response.Redirect(com.hujun64.Total.ErrorPage);
+
             //清除异常
             Server.ClearError();
         }

@@ -17,7 +17,7 @@ namespace com.hujun64.util
     public class UtilPageMeta
     {
         private static List<PageMeta> metaList = new List<PageMeta>();
-
+        private static readonly object Locker = new object();
         private UtilPageMeta()
         {
 
@@ -28,13 +28,16 @@ namespace com.hujun64.util
             List<PageMeta> list = GetPageMetaList(xmlPath);
             if (list!=null&&list.Count > 0)
             {
-                foreach (PageMeta meta in list)
+                lock (Locker)
                 {
-                    if (meta == null || meta.moduleName == null)
-                        break;
-                    else
-                        if (meta.moduleName.Equals(metaModuleName))
-                            return meta;
+                    foreach (PageMeta meta in list)
+                    {
+                        if (meta == null || meta.moduleName == null)
+                            break;
+                        else
+                            if (meta.moduleName.Equals(metaModuleName))
+                                return meta;
+                    }
                 }
             }
             return GetDefaultPageMeta();
@@ -58,31 +61,32 @@ namespace com.hujun64.util
             DataSet dsxml = new DataSet();
             dsxml.ReadXml(meataXmlPath);
 
-
-            foreach (DataTable table in dsxml.Tables)
+            lock (Locker)
             {
-                if (table.TableName.Equals("meta"))
+                foreach (DataTable table in dsxml.Tables)
                 {
-                    foreach (DataRow row in table.Rows)
+                    if (table.TableName.Equals("meta"))
                     {
-                        PageMeta meta = new PageMeta();
+                        foreach (DataRow row in table.Rows)
+                        {
+                            PageMeta meta = new PageMeta();
 
-                        meta.moduleName = row["moduleName"].ToString();
-                        meta.title = row["title"].ToString();
-                        meta.keywords = row["keywords"].ToString();
-                        meta.description = row["description"].ToString();
+                            meta.moduleName = row["moduleName"].ToString();
+                            meta.title = row["title"].ToString();
+                            meta.keywords = row["keywords"].ToString();
+                            meta.description = row["description"].ToString();
 
-                        if (metaList.Contains(meta))
-                            metaList.Remove(meta);
+                            if (metaList.Contains(meta))
+                                metaList.Remove(meta);
 
-                        metaList.Add(meta);
+                            metaList.Add(meta);
+                        }
+
+
                     }
 
-
                 }
-
             }
-
             dsxml = null;
             return metaList;
         }

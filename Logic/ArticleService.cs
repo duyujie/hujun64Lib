@@ -12,7 +12,7 @@ namespace com.hujun64.logic
 {
     internal class ArticleService : IArticleService
     {
-        private static readonly object CachedArticleDictLocker = new object();
+        private static readonly object Locker = new object();
 
         private static Dictionary<string, Article> CachedArticleDict = null;
         private static Dictionary<string, string> CachedTitleKeyDict = null;
@@ -104,7 +104,7 @@ namespace com.hujun64.logic
         {
 
             List<Article> articleList = articleDao.GetAllArticle(IS_CACHE_CONTENT);
-            lock (CachedArticleDictLocker)
+            lock (Locker)
             {
                 if (CachedArticleDict == null)
                     CachedArticleDict = new Dictionary<string, Article>(articleList.Count);
@@ -143,7 +143,7 @@ namespace com.hujun64.logic
         {
             if (string.IsNullOrEmpty(articleId))
                 return;
-            lock (CachedArticleDictLocker)
+            lock (Locker)
             {
 
                 if (CachedRefArticleKeyDict.ContainsKey(articleId))
@@ -174,7 +174,7 @@ namespace com.hujun64.logic
                 if (CachedTitleKeyDict.ContainsValue(articleId))
                 {
                     List<string> removeKeyList = new List<string>();
-                    lock (CachedArticleDictLocker)
+                    lock (Locker)
                     {
                         foreach (string key in CachedTitleKeyDict.Keys)
                         {
@@ -188,7 +188,7 @@ namespace com.hujun64.logic
                     }
 
                 }
-                lock (CachedArticleDictLocker)
+                lock (Locker)
                 {
                     if (CachedArticleDict.ContainsKey(articleId))
                     {
@@ -215,7 +215,7 @@ namespace com.hujun64.logic
             if (article == null || string.IsNullOrEmpty(article.id) || CachedArticleDict.ContainsKey(article.id))
                 return;
 
-            lock (CachedArticleDictLocker)
+            lock (Locker)
             {
                 CachedArticleDict.Add(article.id, article);
 
@@ -247,7 +247,7 @@ namespace com.hujun64.logic
         private void MaintainCachedArticleSite()
         {
             CachedArticleSiteKeyDict = this.GetArticleSiteDict();
-            lock (CachedArticleDictLocker)
+            lock (Locker)
             {
                 foreach (string articleId in CachedArticleSiteKeyDict.Keys)
                 {
@@ -261,7 +261,7 @@ namespace com.hujun64.logic
         }
         private void MaintainCachedArticleRef()
         {
-            lock (CachedArticleDictLocker)
+            lock (Locker)
             {
                 foreach (string refId in CachedRefArticleKeyDict.Keys)
                 {
@@ -387,7 +387,7 @@ namespace com.hujun64.logic
         {
             List<Article> moduleArticleList = new List<Article>();
             IMainClassService mainClassService = ServiceFactory.GetMainClassService();
-            lock (CachedArticleDictLocker)
+            lock (Locker)
             {
                 foreach (Article article in CachedArticleDict.Values)
                 {
@@ -412,7 +412,7 @@ namespace com.hujun64.logic
         public List<Article> GetTopArticleByBigClassId(string bigClassId, int count)
         {
             List<Article> bigArticleList = new List<Article>();
-            lock (CachedArticleDictLocker)
+            lock (Locker)
             {
                 foreach (Article article in CachedArticleDict.Values)
                 {
@@ -874,7 +874,7 @@ namespace com.hujun64.logic
         public List<string> GetAllAuthorsList()
         {
             List<string> authorList = new List<string>();
-            lock (CachedArticleDictLocker)
+            lock (Locker)
             {
                 foreach (Article article in CachedArticleDict.Values)
                 {
@@ -1034,7 +1034,7 @@ namespace com.hujun64.logic
         {
             List<Article> articleList = new List<Article>();
             List<string> titleList = new List<string>();
-            lock (CachedArticleDictLocker)
+            lock (Locker)
             {
                 foreach (Article article in CachedArticleDict.Values)
                 {
@@ -1072,7 +1072,7 @@ namespace com.hujun64.logic
 
             List<Article> articleList = new List<Article>();
             List<string> titleList = new List<string>();
-            lock (CachedArticleDictLocker)
+            lock (Locker)
             {
                 foreach (Article article in CachedArticleDict.Values)
                 {

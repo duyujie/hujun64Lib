@@ -11,7 +11,7 @@ namespace com.hujun64.logic
 {
     internal class GuestbookService : IGuestbookService
     {
-        private static readonly object CachedGuestbookDictLocker = new object();
+        private static readonly object Locker = new object();
         
         private static Dictionary<string, Guestbook> CachedGuestbookDict = null;
         private static Dictionary<string, string> CachedTitleKeyDict = null;
@@ -95,7 +95,7 @@ namespace com.hujun64.logic
                 return;
 
 
-            lock (CachedGuestbookDictLocker)
+            lock (Locker)
             {
 
 
@@ -131,7 +131,7 @@ namespace com.hujun64.logic
         {
 
             List<Guestbook> guestbookList = guestbookDao.GetAllGuestbook(IS_CACHE_CONTENT);
-            lock (CachedGuestbookDictLocker)
+            lock (Locker)
             {
                 if (CachedGuestbookDict == null)
                     CachedGuestbookDict = new Dictionary<string, Guestbook>(guestbookList.Count);
@@ -163,7 +163,7 @@ namespace com.hujun64.logic
         {
             if (guestbook == null || string.IsNullOrEmpty(guestbook.id))
                 return;
-            lock (CachedGuestbookDictLocker)
+            lock (Locker)
             {
                 CachedGuestbookDict.Add(guestbook.id, guestbook);
 
@@ -180,7 +180,7 @@ namespace com.hujun64.logic
 
 
             List<string> classGuestbookList;
-            lock (CachedGuestbookDictLocker)
+            lock (Locker)
             {
                 if (CachedClassGuestbookKeyDict.ContainsKey(classId))
                 {
@@ -240,7 +240,7 @@ namespace com.hujun64.logic
         public Dictionary<string, string> GetAllGuestEmailDict(bool isOnlyShanghai)
         {
             Dictionary<string, string> guestEmailDict = new Dictionary<string, string>();
-            lock (CachedGuestbookDictLocker)
+            lock (Locker)
             {
                 foreach (Guestbook guestbook in CachedGuestbookDict.Values)
                 {
@@ -297,7 +297,7 @@ namespace com.hujun64.logic
         {
 
             List<Guestbook> guestbookList = new List<Guestbook>();
-            lock (CachedGuestbookDictLocker)
+            lock (Locker)
             {
                 foreach (Guestbook guestbook in CachedGuestbookDict.Values)
                 {
@@ -485,7 +485,7 @@ namespace com.hujun64.logic
             int success = guestbookDao.UpdateAllStatic(isStatic, timestamp);
 
             //更新cache
-            lock (CachedGuestbookDictLocker)
+            lock (Locker)
             {
                 foreach (string id in CachedGuestbookDict.Keys)
                 {
